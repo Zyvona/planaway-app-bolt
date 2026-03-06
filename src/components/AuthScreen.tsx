@@ -38,24 +38,26 @@ export function AuthScreen() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative">
       <div className="relative w-full max-w-lg">
-        <div className="vintage-card overflow-hidden">
-          <div className="vintage-header px-10 py-12">
-            <div className="flex justify-center mb-4">
-              <Plane className="w-10 h-10 text-white" />
+        <div className="vintage-card">
+          <div className="vintage-header px-10 py-8 pb-12">
+            <div className="flex justify-center mb-3">
+              <Plane className="w-12 h-12 text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-white text-center mb-2">
+            <h1 className="text-5xl font-bold text-white text-center mb-3" style={{ fontFamily: 'Georgia, serif' }}>
               PlanAway
             </h1>
-            <p className="text-xs font-bold text-[#d4a574] text-center tracking-widest">
+            <p className="text-xs font-bold text-[#d4a574] text-center tracking-[0.3em]">
               AI TRAVEL PLANNER
             </p>
           </div>
 
-          <div className="p-10">
-            <div className="text-center mb-8">
-              <p className="text-xs font-bold text-[#d4a574] tracking-widest mb-2">SOLO ADVENTURE AWAITS</p>
-              <h2 className="text-3xl font-bold text-[#1a3a52] mb-3">Plan Your Perfect Trip</h2>
-              <p className="text-sm text-[#8b9db0]">
+          <div className="px-10 py-10 bg-[#f5f0e8]">
+            <div className="text-center mb-10">
+              <p className="text-xs font-bold text-[#d4a574] tracking-[0.2em] mb-3">SOLO ADVENTURE AWAITS</p>
+              <h2 className="text-4xl font-bold text-[#1a3a52] mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+                Plan Your Perfect Trip
+              </h2>
+              <p className="text-base text-[#6b7c8f] leading-relaxed">
                 Tell us where you're headed and we'll handle the rest.
               </p>
             </div>
@@ -64,7 +66,7 @@ export function AuthScreen() {
               <button
                 onClick={handleGoogleLogin}
                 disabled={loading}
-                className="w-full vintage-button text-white font-semibold py-4 px-6 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full vintage-button text-[#1a3a52] font-bold text-lg py-5 px-6 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <svg className="w-6 h-6" viewBox="0 0 24 24">
                   <path
@@ -88,7 +90,7 @@ export function AuthScreen() {
               </button>
             </div>
 
-            <p className="text-[#8b9db0] text-xs text-center mt-8">
+            <p className="text-[#8b9db0] text-xs text-center mt-10">
               Powered by AI · Built for solo explorers
             </p>
           </div>
