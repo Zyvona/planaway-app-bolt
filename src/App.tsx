@@ -8,6 +8,8 @@ function App() {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
+  console.log('Current Session:', session);
+
   useEffect(() => {
     // Check if we're on localhost and handle OAuth callback
     const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
