@@ -27,27 +27,32 @@ export function AuthScreen() {
     <div className="min-h-screen flex items-center justify-center p-4 relative">
       <div className="relative w-full max-w-lg">
         <div className="vintage-card overflow-hidden">
-          <div className="vintage-header px-10 py-8">
-            <div className="flex justify-center">
-              <div className="bg-gradient-to-br from-[#D4AF37] to-[#C5A028] p-4 border-4 border-[#FDF5E6] shadow-xl">
-                <Plane className="w-12 h-12 text-[#002147]" />
-              </div>
+          <div className="vintage-header px-10 py-12">
+            <div className="flex justify-center mb-4">
+              <Plane className="w-10 h-10 text-white" />
             </div>
+            <h1 className="text-4xl font-bold text-white text-center mb-2">
+              PlanAway
+            </h1>
+            <p className="text-xs font-bold text-[#d4a574] text-center tracking-widest">
+              AI TRAVEL PLANNER
+            </p>
           </div>
 
           <div className="p-10">
-            <h1 className="text-5xl font-bold text-[#002147] text-center mb-3">
-              PlanAway
-            </h1>
-            <p className="text-lg text-[#002147] text-center mb-8 font-medium">
-              Your passport to extraordinary adventures
-            </p>
+            <div className="text-center mb-8">
+              <p className="text-xs font-bold text-[#d4a574] tracking-widest mb-2">SOLO ADVENTURE AWAITS</p>
+              <h2 className="text-3xl font-bold text-[#1a3a52] mb-3">Plan Your Perfect Trip</h2>
+              <p className="text-sm text-[#8b9db0]">
+                Tell us where you're headed and we'll handle the rest.
+              </p>
+            </div>
 
             <div className="space-y-4">
               <button
                 onClick={handleGoogleLogin}
                 disabled={loading}
-                className="w-full vintage-button text-[#002147] font-bold py-4 px-6 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full vintage-button text-white font-semibold py-4 px-6 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <svg className="w-6 h-6" viewBox="0 0 24 24">
                   <path
@@ -69,23 +74,10 @@ export function AuthScreen() {
                 </svg>
                 {loading ? 'Embarking...' : 'Begin Your Journey with Google'}
               </button>
-
-              <button
-                disabled
-                className="w-full bg-[#FFFEF9] text-[#002147]/40 font-bold py-4 px-6 border-3 border-[#002147]/30 flex items-center justify-center gap-3 cursor-not-allowed relative"
-              >
-                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
-                </svg>
-                Continue with Apple
-                <span className="absolute top-2 right-2 bg-[#D4AF37] text-[#002147] text-xs font-bold px-3 py-1 border-2 border-[#002147]">
-                  Coming Soon
-                </span>
-              </button>
             </div>
 
-            <p className="text-[#002147] text-sm text-center mt-8 font-medium">
-              By continuing, you agree to our Terms of Service and Privacy Policy
+            <p className="text-[#8b9db0] text-xs text-center mt-8">
+              Powered by AI · Built for solo explorers
             </p>
           </div>
         </div>

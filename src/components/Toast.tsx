@@ -15,12 +15,12 @@ export function Toast({ message, onClose, duration = 3000 }: ToastProps) {
 
   return (
     <div className="fixed top-4 right-4 z-50 animate-slide-in">
-      <div className="bg-white rounded-lg shadow-lg border border-green-200 p-4 flex items-center gap-3 min-w-[300px]">
+      <div className="bg-white rounded-xl shadow-xl border-2 border-green-500 p-4 flex items-center gap-3 min-w-[300px]">
         <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
-        <p className="text-gray-900 font-medium flex-1">{message}</p>
+        <p className="text-[#1a3a52] font-semibold flex-1">{message}</p>
         <button
           onClick={onClose}
-          className="text-gray-400 hover:text-gray-600 transition-colors"
+          className="text-[#8b9db0] hover:text-[#1a3a52] transition-colors"
         >
           <X className="w-5 h-5" />
         </button>

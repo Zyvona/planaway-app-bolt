@@ -50,29 +50,33 @@ export function CreateItineraryForm({ onClose, onSuccess, userId }: CreateItiner
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50">
       <div className="vintage-card max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="vintage-header sticky top-0 px-8 py-6 flex items-center justify-between">
-          <h2 className="text-3xl font-bold text-[#D4AF37]">Plan Your Trip</h2>
+        <div className="vintage-header sticky top-0 px-8 py-8 flex items-center justify-between">
+          <div>
+            <p className="text-xs font-bold text-[#d4a574] tracking-widest mb-2">SOLO ADVENTURE AWAITS</p>
+            <h2 className="text-3xl font-bold text-white">Plan Your Perfect Trip</h2>
+            <p className="text-sm text-[#8b9db0] mt-2">Tell us where you're headed and we'll handle the rest.</p>
+          </div>
           <button
             onClick={onClose}
-            className="text-[#D4AF37] hover:text-white transition-colors"
+            className="text-white hover:text-[#d4a574] transition-colors"
             disabled={isLoading}
           >
-            <X className="w-7 h-7" strokeWidth={3} />
+            <X className="w-6 h-6" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-8 space-y-6">
           {error && (
-            <div className="bg-red-100 border-3 border-red-800 text-red-900 px-4 py-3 font-medium">
+            <div className="bg-red-100 border-l-4 border-red-800 text-red-900 px-4 py-3 font-medium rounded">
               {error}
             </div>
           )}
 
           <div>
-            <label htmlFor="origin" className="block text-base font-semibold text-[#002147] mb-3">
+            <label htmlFor="origin" className="block text-xs font-bold text-[#1a3a52] mb-2 uppercase tracking-wider">
               <div className="flex items-center gap-2">
-                <MapPin className="w-5 h-5" />
-                Departure City
+                <MapPin className="w-4 h-4" />
+                Origin City
               </div>
             </label>
             <input
@@ -81,17 +85,17 @@ export function CreateItineraryForm({ onClose, onSuccess, userId }: CreateItiner
               value={origin}
               onChange={(e) => setOrigin(e.target.value)}
               required
-              placeholder="New York, USA"
-              className="vintage-input w-full px-4 py-3 text-base"
+              placeholder="Where are you departing from?"
+              className="vintage-input w-full px-0 py-2 text-base"
               disabled={isLoading}
             />
           </div>
 
           <div>
-            <label htmlFor="destination" className="block text-base font-semibold text-[#002147] mb-3">
+            <label htmlFor="destination" className="block text-xs font-bold text-[#1a3a52] mb-2 uppercase tracking-wider">
               <div className="flex items-center gap-2">
-                <Plane className="w-5 h-5" />
-                Destination
+                <Plane className="w-4 h-4" />
+                Destination City
               </div>
             </label>
             <input
@@ -100,89 +104,61 @@ export function CreateItineraryForm({ onClose, onSuccess, userId }: CreateItiner
               value={destination}
               onChange={(e) => setDestination(e.target.value)}
               required
-              placeholder="Paris, France"
-              className="vintage-input w-full px-4 py-3 text-base"
+              placeholder="Where do you want to go?"
+              className="vintage-input w-full px-0 py-2 text-base"
               disabled={isLoading}
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-6">
-            <div>
-              <label htmlFor="duration" className="block text-base font-semibold text-[#002147] mb-3">
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-5 h-5" />
-                  Duration
-                </div>
-              </label>
+          <div>
+            <label htmlFor="totalBudget" className="block text-xs font-bold text-[#1a3a52] mb-2 uppercase tracking-wider">
+              <div className="flex items-center gap-2">
+                <DollarSign className="w-4 h-4" />
+                Total Budget
+              </div>
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none">
+                <span className="text-[#8b9db0] font-normal text-base">$</span>
+              </div>
               <input
                 type="number"
-                id="duration"
-                value={durationDays}
-                onChange={(e) => setDurationDays(e.target.value)}
-                required
-                min="1"
-                placeholder="7 days"
-                className="vintage-input w-full px-4 py-3 text-base"
+                id="totalBudget"
+                value={totalBudget}
+                onChange={(e) => setTotalBudget(e.target.value)}
+                min="0"
+                step="1"
+                placeholder="e.g. 2000"
+                className="vintage-input w-full pl-5 pr-0 py-2 text-base"
                 disabled={isLoading}
               />
             </div>
-
-            <div>
-              <label htmlFor="totalBudget" className="block text-base font-semibold text-[#002147] mb-3">
-                <div className="flex items-center gap-2">
-                  <DollarSign className="w-5 h-5" />
-                  Total Budget
-                </div>
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <span className="text-[#002147] font-bold text-lg">$</span>
-                </div>
-                <input
-                  type="number"
-                  id="totalBudget"
-                  value={totalBudget}
-                  onChange={(e) => setTotalBudget(e.target.value)}
-                  min="0"
-                  step="1"
-                  placeholder="2000"
-                  className="vintage-input w-full pl-9 pr-4 py-3 text-base"
-                  disabled={isLoading}
-                />
-              </div>
-            </div>
           </div>
 
           <div>
-            <label className="block text-base font-semibold text-[#002147] mb-3">
+            <label htmlFor="duration" className="block text-xs font-bold text-[#1a3a52] mb-2 uppercase tracking-wider">
               <div className="flex items-center gap-2">
-                <Compass className="w-5 h-5" />
-                Experience Level
+                <Calendar className="w-4 h-4" />
+                Number of Days
               </div>
             </label>
-            <div className="grid grid-cols-3 gap-3">
-              {(['Economy', 'Standard', 'Luxury'] as const).map((level) => (
-                <button
-                  key={level}
-                  type="button"
-                  onClick={() => setBudgetLevel(level)}
-                  className={`px-4 py-3 border-3 font-bold transition-all duration-200 ${
-                    budgetLevel === level
-                      ? 'bg-[#D4AF37] text-[#002147] border-[#002147] shadow-lg scale-105'
-                      : 'bg-[#FFFEF9] text-[#002147] border-[#002147] hover:bg-[#F5E6D3]'
-                  }`}
-                  disabled={isLoading}
-                >
-                  {level}
-                </button>
-              ))}
-            </div>
+            <input
+              type="number"
+              id="duration"
+              value={durationDays}
+              onChange={(e) => setDurationDays(e.target.value)}
+              required
+              min="1"
+              placeholder="e.g. 7"
+              className="vintage-input w-full px-0 py-2 text-base"
+              disabled={isLoading}
+            />
           </div>
 
           <div>
-            <label htmlFor="travelStyle" className="block text-base font-semibold text-[#002147] mb-3">
+            <label htmlFor="travelStyle" className="block text-xs font-bold text-[#1a3a52] mb-2 uppercase tracking-wider">
               <div className="flex items-center gap-2">
-                <Compass className="w-5 h-5" />
+                <Compass className="w-4 h-4" />
                 Travel Style
               </div>
             </label>
@@ -193,26 +169,53 @@ export function CreateItineraryForm({ onClose, onSuccess, userId }: CreateItiner
               onChange={(e) => setTravelStyle(e.target.value)}
               required
               placeholder="Adventure, Relaxation, Cultural"
-              className="vintage-input w-full px-4 py-3 text-base"
+              className="vintage-input w-full px-0 py-2 text-base"
               disabled={isLoading}
             />
           </div>
 
-          <div className="flex gap-4 pt-6">
+          <div>
+            <label className="block text-xs font-bold text-[#1a3a52] mb-2 uppercase tracking-wider">
+              <div className="flex items-center gap-2">
+                <Compass className="w-4 h-4" />
+                Experience Level
+              </div>
+            </label>
+            <div className="grid grid-cols-3 gap-3">
+              {(['Economy', 'Standard', 'Luxury'] as const).map((level) => (
+                <button
+                  key={level}
+                  type="button"
+                  onClick={() => setBudgetLevel(level)}
+                  className={`px-4 py-3 rounded-lg font-semibold transition-all duration-200 ${
+                    budgetLevel === level
+                      ? 'bg-[#1a3a52] text-white'
+                      : 'bg-[#f0f0f0] text-[#1a3a52] hover:bg-[#e0e0e0]'
+                  }`}
+                  disabled={isLoading}
+                >
+                  {level}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="pt-6">
+            <button
+              type="submit"
+              className="w-full vintage-button px-6 py-4 font-semibold text-white disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              disabled={isLoading}
+            >
+              <Plane className="w-5 h-5" />
+              {isLoading ? 'Preparing Journey...' : 'Plan My Trip'}
+            </button>
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-6 py-3 border-3 border-[#002147] bg-[#FFFEF9] text-[#002147] font-bold hover:bg-[#F5E6D3] transition-colors"
+              className="w-full mt-3 px-6 py-3 bg-transparent text-[#1a3a52] font-medium hover:text-[#d4a574] transition-colors"
               disabled={isLoading}
             >
               Cancel
-            </button>
-            <button
-              type="submit"
-              className="flex-1 vintage-button px-6 py-3 font-bold disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={isLoading}
-            >
-              {isLoading ? 'Preparing Journey...' : 'Create Itinerary'}
             </button>
           </div>
         </form>
