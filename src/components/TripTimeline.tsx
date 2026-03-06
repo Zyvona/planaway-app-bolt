@@ -221,7 +221,7 @@ export const TripTimeline: React.FC<TripTimelineProps> = ({
                               }}
                             >
                               <div className="flex gap-5">
-                                <div className={`flex-shrink-0 w-14 h-14 flex items-center justify-center border-3 ${categoryColors[activity.category]}`}>
+                                <div className={`flex-shrink-0 w-14 h-14 flex items-center justify-center vintage-stamp ${categoryColors[activity.category]}`}>
                                   <ActivityIcon className="w-7 h-7" />
                                 </div>
                                 <div className="flex-1">
@@ -276,19 +276,19 @@ export const TripTimeline: React.FC<TripTimelineProps> = ({
 
         {viewMode === 'safety' && (
           <div className="vintage-card p-8">
-            <h2 className="text-3xl font-bold text-[#002147] mb-6">Safety Information</h2>
-            <div className="space-y-4 text-[#002147]">
-              <div className="bg-[#FFFEF9] border-3 border-[#002147] p-6">
-                <h3 className="font-bold text-xl mb-2">Emergency Contacts</h3>
-                <p className="leading-relaxed">Keep local emergency numbers handy and register with your embassy.</p>
+            <h2 className="text-4xl font-bold text-[#002147] mb-8 text-center border-b-4 border-[#002147] pb-4">Safety Information</h2>
+            <div className="space-y-6 text-[#002147]">
+              <div className="passport-card">
+                <h3 className="font-bold text-2xl mb-3 text-[#002147]">Emergency Contacts</h3>
+                <p className="leading-relaxed text-base">Keep local emergency numbers handy and register with your embassy.</p>
               </div>
-              <div className="bg-[#FFFEF9] border-3 border-[#002147] p-6">
-                <h3 className="font-bold text-xl mb-2">Travel Insurance</h3>
-                <p className="leading-relaxed">Ensure you have comprehensive travel insurance covering medical emergencies and trip cancellations.</p>
+              <div className="passport-card">
+                <h3 className="font-bold text-2xl mb-3 text-[#002147]">Travel Insurance</h3>
+                <p className="leading-relaxed text-base">Ensure you have comprehensive travel insurance covering medical emergencies and trip cancellations.</p>
               </div>
-              <div className="bg-[#FFFEF9] border-3 border-[#002147] p-6">
-                <h3 className="font-bold text-xl mb-2">Health Precautions</h3>
-                <p className="leading-relaxed">Check vaccination requirements and carry necessary medications with prescriptions.</p>
+              <div className="passport-card">
+                <h3 className="font-bold text-2xl mb-3 text-[#002147]">Health Precautions</h3>
+                <p className="leading-relaxed text-base">Check vaccination requirements and carry necessary medications with prescriptions.</p>
               </div>
             </div>
           </div>
