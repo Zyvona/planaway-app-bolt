@@ -2,6 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(to bottom,
+      #8B4513 0%,
+      #D2691E 15%,
+      #CD853F 25%,
+      #F4A460 35%,
+      #FFA07A 45%,
+      #FF6347 55%,
+      #DC143C 65%,
+      #8B0000 75%,
+      #002147 85%,
+      #001428 100%
+    );
+    min-height: 100vh;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+      linear-gradient(0deg, rgba(0, 33, 71, 0.3) 0%, transparent 30%),
+      radial-gradient(ellipse at 50% 80%, rgba(139, 69, 19, 0.4) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 60%, rgba(205, 133, 63, 0.3) 0%, transparent 40%),
+      radial-gradient(ellipse at 80% 70%, rgba(139, 69, 19, 0.3) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to top,
+      rgba(0, 33, 71, 0.9) 0%,
+      rgba(0, 33, 71, 0.6) 50%,
+      transparent 100%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  #root {
+    position: relative;
+    z-index: 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+
+  label {
+    font-family: 'Lora', serif;
+  }
+}
+
 @keyframes slide-in {
   from {
     transform: translateX(100%);
@@ -15,4 +80,105 @@
 
 .animate-slide-in {
   animation: slide-in 0.3s ease-out;
+}
+
+.vintage-card {
+  background: #FDF5E6;
+  border: 6px solid #002147;
+  box-shadow:
+    0 0 0 2px #D4AF37,
+    0 0 0 8px #002147,
+    8px 8px 0 0 rgba(0, 33, 71, 0.3);
+}
+
+.vintage-button {
+  background: linear-gradient(135deg, #D4AF37 0%, #C5A028 100%);
+  border: 3px solid #002147;
+  box-shadow:
+    0 0 0 1px #D4AF37,
+    4px 4px 0 0 rgba(0, 33, 71, 0.3);
+  transition: all 0.2s ease;
+}
+
+.vintage-button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow:
+    0 0 0 1px #D4AF37,
+    6px 6px 0 0 rgba(0, 33, 71, 0.4);
+}
+
+.vintage-button:active {
+  transform: translate(2px, 2px);
+  box-shadow:
+    0 0 0 1px #D4AF37,
+    2px 2px 0 0 rgba(0, 33, 71, 0.3);
+}
+
+.luggage-tag {
+  position: relative;
+  background: linear-gradient(135deg, #FDF5E6 0%, #F5E6D3 100%);
+  border: 3px solid #002147;
+  clip-path: polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0 100%);
+  padding: 12px 24px 12px 16px;
+  margin-right: 8px;
+  box-shadow:
+    inset 0 1px 0 rgba(212, 175, 55, 0.3),
+    3px 3px 0 rgba(0, 33, 71, 0.2);
+}
+
+.luggage-tag::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background: #002147;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px #D4AF37;
+}
+
+.luggage-tag.active {
+  background: linear-gradient(135deg, #D4AF37 0%, #C5A028 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    3px 3px 0 rgba(0, 33, 71, 0.3);
+}
+
+.vintage-input {
+  background: #FFFEF9;
+  border: 3px solid #002147;
+  box-shadow: inset 2px 2px 4px rgba(0, 33, 71, 0.1);
+  font-family: 'Inter', sans-serif;
+}
+
+.vintage-input:focus {
+  outline: none;
+  border-color: #D4AF37;
+  box-shadow:
+    inset 2px 2px 4px rgba(0, 33, 71, 0.1),
+    0 0 0 3px rgba(212, 175, 55, 0.2);
+}
+
+.vintage-header {
+  background: linear-gradient(135deg, #002147 0%, #003566 100%);
+  border-bottom: 4px solid #D4AF37;
+  position: relative;
+}
+
+.vintage-header::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    #D4AF37 0px,
+    #D4AF37 10px,
+    transparent 10px,
+    transparent 20px
+  );
 }

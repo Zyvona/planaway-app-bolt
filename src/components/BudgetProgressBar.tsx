@@ -23,11 +23,11 @@ export const BudgetProgressBar: React.FC<BudgetProgressBarProps> = ({
   const isOverBudget = totalCost > totalBudget;
 
   const categoryColors: Record<string, string> = {
-    transport: '#3b82f6',
-    accommodation: '#8b5cf6',
-    food: '#ec4899',
-    activity: '#10b981',
-    shopping: '#f59e0b'
+    transport: '#002147',
+    accommodation: '#8B4513',
+    food: '#DC143C',
+    activity: '#228B22',
+    shopping: '#D4AF37'
   };
 
   const categoryLabels: Record<string, string> = {
@@ -49,87 +49,87 @@ export const BudgetProgressBar: React.FC<BudgetProgressBarProps> = ({
     .sort((a, b) => b.value - a.value);
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+    <div className="space-y-6">
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-2">
-          <Wallet className="w-6 h-6 text-blue-600" />
-          <h3 className="text-xl font-bold text-gray-900">Budget Breakdown</h3>
+        <div className="flex items-center gap-3">
+          <Wallet className="w-7 h-7 text-[#D4AF37]" />
+          <h3 className="text-3xl font-bold text-[#002147]">Budget Ledger</h3>
         </div>
-        <div className={`flex items-center gap-1 px-3 py-1 rounded-full ${
-          isOverBudget ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
+        <div className={`flex items-center gap-2 px-4 py-2 border-3 ${
+          isOverBudget ? 'bg-red-100 text-red-900 border-red-900' : 'bg-green-100 text-green-900 border-green-900'
         }`}>
-          <TrendingUp className="w-4 h-4" />
-          <span className="text-sm font-semibold">
+          <TrendingUp className="w-5 h-5" />
+          <span className="text-base font-bold">
             {percentageUsed.toFixed(1)}% Used
           </span>
         </div>
       </div>
 
-      <div className="space-y-4">
-        <div className="flex justify-between items-baseline">
-          <div>
-            <p className="text-sm text-gray-600">Total Budget</p>
-            <p className="text-2xl font-bold text-gray-900">${totalBudget.toLocaleString()}</p>
+      <div className="space-y-6">
+        <div className="grid grid-cols-3 gap-4">
+          <div className="bg-[#FFFEF9] border-3 border-[#002147] p-4">
+            <p className="text-sm text-[#002147] font-semibold mb-1">Total Budget</p>
+            <p className="text-2xl font-bold text-[#002147]">${totalBudget.toLocaleString()}</p>
           </div>
-          <div className="text-right">
-            <p className="text-sm text-gray-600">Total Spent</p>
+          <div className="bg-[#FFFEF9] border-3 border-[#002147] p-4">
+            <p className="text-sm text-[#002147] font-semibold mb-1">Total Spent</p>
             <p className={`text-2xl font-bold ${
-              isOverBudget ? 'text-red-600' : 'text-blue-600'
+              isOverBudget ? 'text-red-800' : 'text-[#D4AF37]'
             }`}>
               ${totalCost.toLocaleString()}
             </p>
           </div>
-          <div className="text-right">
-            <p className="text-sm text-gray-600">Remaining</p>
+          <div className="bg-[#FFFEF9] border-3 border-[#002147] p-4">
+            <p className="text-sm text-[#002147] font-semibold mb-1">Remaining</p>
             <p className={`text-2xl font-bold ${
-              remaining >= 0 ? 'text-green-600' : 'text-red-600'
+              remaining >= 0 ? 'text-green-800' : 'text-red-800'
             }`}>
               ${Math.abs(remaining).toLocaleString()}
             </p>
           </div>
         </div>
 
-        <div className="relative h-8 bg-gray-100 rounded-full overflow-hidden">
+        <div className="relative h-10 bg-[#FDF5E6] border-3 border-[#002147] overflow-hidden">
           <div
-            className={`h-full rounded-full transition-all duration-1000 ease-out ${
+            className={`h-full transition-all duration-1000 ease-out ${
               isOverBudget
-                ? 'bg-gradient-to-r from-red-500 to-red-600'
-                : 'bg-gradient-to-r from-blue-500 to-blue-600'
+                ? 'bg-gradient-to-r from-red-700 to-red-900'
+                : 'bg-gradient-to-r from-[#D4AF37] to-[#C5A028]'
             }`}
             style={{ width: `${Math.min(percentageUsed, 100)}%` }}
           />
           {isOverBudget && (
-            <div className="absolute inset-0 flex items-center justify-center text-white text-sm font-semibold">
+            <div className="absolute inset-0 flex items-center justify-center text-white text-base font-bold">
               Over Budget!
             </div>
           )}
         </div>
 
-        <div className="pt-4 border-t border-gray-200">
-          <h4 className="text-sm font-semibold text-gray-700 mb-3">Spending by Category</h4>
-          <div className="space-y-3">
+        <div className="pt-6 border-t-4 border-[#002147]">
+          <h4 className="text-lg font-bold text-[#002147] mb-4">Expenditure by Category</h4>
+          <div className="space-y-4">
             {categories.map((category) => (
-              <div key={category.key} className="space-y-1">
-                <div className="flex justify-between items-center text-sm">
-                  <div className="flex items-center gap-2">
+              <div key={category.key} className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-3">
                     <div
-                      className="w-3 h-3 rounded-full"
+                      className="w-4 h-4 border-2 border-[#002147]"
                       style={{ backgroundColor: category.color }}
                     />
-                    <span className="font-medium text-gray-700">{category.label}</span>
+                    <span className="font-bold text-[#002147]">{category.label}</span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-gray-600">
+                  <div className="flex items-center gap-4">
+                    <span className="text-[#002147] font-semibold">
                       {category.percentage.toFixed(1)}%
                     </span>
-                    <span className="font-semibold text-gray-900 w-20 text-right">
+                    <span className="font-bold text-[#D4AF37] w-24 text-right">
                       ${category.value.toLocaleString()}
                     </span>
                   </div>
                 </div>
-                <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                <div className="h-3 bg-[#FDF5E6] border-2 border-[#002147] overflow-hidden">
                   <div
-                    className="h-full rounded-full transition-all duration-1000 ease-out"
+                    className="h-full transition-all duration-1000 ease-out"
                     style={{
                       width: `${category.percentage}%`,
                       backgroundColor: category.color
@@ -141,18 +141,18 @@ export const BudgetProgressBar: React.FC<BudgetProgressBarProps> = ({
           </div>
         </div>
 
-        <div className="pt-4 border-t border-gray-200">
-          <div className="flex items-start gap-2 text-sm text-gray-600">
-            <DollarSign className="w-4 h-4 mt-0.5 flex-shrink-0" />
-            <p>
+        <div className="pt-6 border-t-4 border-[#002147]">
+          <div className="flex items-start gap-3 text-base text-[#002147] bg-[#FFFEF9] border-3 border-[#002147] p-4">
+            <DollarSign className="w-5 h-5 mt-0.5 flex-shrink-0" />
+            <p className="leading-relaxed">
               {isOverBudget ? (
-                <span className="text-red-600 font-medium">
+                <span className="font-semibold">
                   This itinerary exceeds your budget by ${(totalCost - totalBudget).toLocaleString()}.
                   Consider adjusting activities or accommodations.
                 </span>
               ) : (
-                <span className="text-green-600 font-medium">
-                  Great planning! You have ${remaining.toLocaleString()} remaining in your budget for spontaneous adventures.
+                <span className="font-semibold">
+                  Excellent planning! You have ${remaining.toLocaleString()} remaining in your budget for spontaneous adventures.
                 </span>
               )}
             </p>

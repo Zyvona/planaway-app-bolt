@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { MapPin, Clock, DollarSign, Calendar, Plane, Hotel, Utensils, Sparkles, ShoppingBag, Download } from 'lucide-react';
+import { MapPin, Clock, DollarSign, Calendar, Plane, Hotel, Utensils, Sparkles, ShoppingBag, Download, Shield } from 'lucide-react';
 import { Day, Activity } from '../lib/mock-ai-data';
 import { BudgetProgressBar } from './BudgetProgressBar';
+
+type ViewMode = 'itinerary' | 'budget' | 'safety';
 
 interface TripTimelineProps {
   destination: string;
@@ -23,11 +25,11 @@ const categoryIcons = {
 };
 
 const categoryColors = {
-  transport: 'bg-blue-50 text-blue-700 border-blue-200',
-  accommodation: 'bg-purple-50 text-purple-700 border-purple-200',
-  food: 'bg-pink-50 text-pink-700 border-pink-200',
-  activity: 'bg-green-50 text-green-700 border-green-200',
-  shopping: 'bg-amber-50 text-amber-700 border-amber-200'
+  transport: 'bg-blue-50 text-[#002147] border-[#002147]',
+  accommodation: 'bg-[#F5E6D3] text-[#002147] border-[#002147]',
+  food: 'bg-red-50 text-[#002147] border-[#002147]',
+  activity: 'bg-green-50 text-[#002147] border-[#002147]',
+  shopping: 'bg-[#FDF5E6] text-[#002147] border-[#D4AF37]'
 };
 
 export const TripTimeline: React.FC<TripTimelineProps> = ({
@@ -40,6 +42,7 @@ export const TripTimeline: React.FC<TripTimelineProps> = ({
   totalCost
 }) => {
   const [expandedDays, setExpandedDays] = useState<Set<number>>(new Set([1]));
+  const [viewMode, setViewMode] = useState<ViewMode>('itinerary');
   const timelineRef = useRef<HTMLDivElement>(null);
 
   const toggleDay = (dayNumber: number) => {
@@ -98,153 +101,198 @@ export const TripTimeline: React.FC<TripTimelineProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4">
+    <div className="min-h-screen py-12 px-4">
       <div className="max-w-6xl mx-auto">
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-2xl p-8 mb-8 text-white">
-          <div className="flex items-start justify-between">
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <Plane className="w-10 h-10" />
-                <h1 className="text-4xl font-bold">Your {destination} Adventure</h1>
-              </div>
-              <div className="flex items-center gap-6 text-blue-100">
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-5 h-5" />
-                  <span className="text-lg">{origin} → {destination}</span>
+        <div className="vintage-card p-10 mb-10">
+          <div className="vintage-header -mx-10 -mt-10 mb-8 px-10 py-8">
+            <div className="flex items-start justify-between">
+              <div>
+                <div className="flex items-center gap-4 mb-4">
+                  <Plane className="w-12 h-12 text-[#D4AF37]" />
+                  <h1 className="text-5xl font-bold text-[#D4AF37]">
+                    {destination} Expedition
+                  </h1>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-5 h-5" />
-                  <span className="text-lg">
-                    {new Date(startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - {new Date(endDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                  </span>
+                <div className="flex items-center gap-8 text-[#D4AF37]">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="w-5 h-5" />
+                    <span className="text-lg font-medium">{origin} → {destination}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-5 h-5" />
+                    <span className="text-lg font-medium">
+                      {new Date(startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - {new Date(endDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </span>
+                  </div>
                 </div>
               </div>
+              <button
+                onClick={handleExportPDF}
+                className="vintage-button flex items-center gap-2 px-6 py-3 text-[#002147] font-bold"
+              >
+                <Download className="w-5 h-5" />
+                Export PDF
+              </button>
             </div>
+          </div>
+
+          <div className="flex gap-2 mb-8">
             <button
-              onClick={handleExportPDF}
-              className="flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              onClick={() => setViewMode('itinerary')}
+              className={`luggage-tag ${viewMode === 'itinerary' ? 'active' : ''}`}
             >
-              <Download className="w-5 h-5" />
-              Export PDF
+              <Plane className="w-4 h-4 inline mr-2" />
+              Itinerary
+            </button>
+            <button
+              onClick={() => setViewMode('budget')}
+              className={`luggage-tag ${viewMode === 'budget' ? 'active' : ''}`}
+            >
+              <DollarSign className="w-4 h-4 inline mr-2" />
+              Budget
+            </button>
+            <button
+              onClick={() => setViewMode('safety')}
+              className={`luggage-tag ${viewMode === 'safety' ? 'active' : ''}`}
+            >
+              <Shield className="w-4 h-4 inline mr-2" />
+              Safety
             </button>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8 mb-8">
-          <div className="lg:col-span-2">
-            <div ref={timelineRef} className="space-y-6">
-              {days.map((day, index) => {
-                const isExpanded = expandedDays.has(day.dayNumber);
-                const Icon = categoryIcons[day.activities[0]?.category || 'activity'];
+        {viewMode === 'itinerary' && (
+          <div ref={timelineRef} className="space-y-6">
+            {days.map((day, index) => {
+              const isExpanded = expandedDays.has(day.dayNumber);
 
-                return (
-                  <div
-                    key={day.dayNumber}
-                    className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 transition-all duration-300 hover:shadow-xl"
-                    style={{
-                      animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
-                    }}
+              return (
+                <div
+                  key={day.dayNumber}
+                  className="vintage-card overflow-hidden transition-all duration-300 hover:translate-y-[-2px]"
+                  style={{
+                    animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
+                  }}
+                >
+                  <button
+                    onClick={() => toggleDay(day.dayNumber)}
+                    className="w-full p-8 flex items-center justify-between hover:bg-[#F5E6D3] transition-colors duration-200"
                   >
-                    <button
-                      onClick={() => toggleDay(day.dayNumber)}
-                      className="w-full p-6 flex items-center justify-between hover:bg-gray-50 transition-colors duration-200"
-                    >
-                      <div className="flex items-center gap-4">
-                        <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white font-bold text-xl shadow-lg">
-                          {day.dayNumber}
-                        </div>
-                        <div className="text-left">
-                          <h3 className="text-2xl font-bold text-gray-900">{day.title}</h3>
-                          <p className="text-sm text-gray-600 mt-1">
-                            {new Date(day.date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
-                          </p>
-                        </div>
+                    <div className="flex items-center gap-6">
+                      <div className="flex items-center justify-center w-20 h-20 bg-gradient-to-br from-[#D4AF37] to-[#C5A028] border-4 border-[#002147] text-[#002147] font-bold text-2xl shadow-lg">
+                        {day.dayNumber}
                       </div>
-                      <div className="flex items-center gap-4">
-                        <div className="text-right">
-                          <p className="text-sm text-gray-600">Daily Total</p>
-                          <p className="text-2xl font-bold text-blue-600">${day.totalCost.toLocaleString()}</p>
-                        </div>
-                        <div className={`transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>
-                          <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                          </svg>
-                        </div>
+                      <div className="text-left">
+                        <h3 className="text-3xl font-bold text-[#002147]">{day.title}</h3>
+                        <p className="text-base text-[#002147] mt-1 font-medium">
+                          {new Date(day.date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+                        </p>
                       </div>
-                    </button>
+                    </div>
+                    <div className="flex items-center gap-6">
+                      <div className="text-right">
+                        <p className="text-sm text-[#002147] font-semibold">Daily Total</p>
+                        <p className="text-3xl font-bold text-[#D4AF37]">${day.totalCost.toLocaleString()}</p>
+                      </div>
+                      <div className={`transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>
+                        <svg className="w-8 h-8 text-[#002147]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+                    </div>
+                  </button>
 
-                    {isExpanded && (
-                      <div
-                        className="border-t border-gray-200 bg-gray-50"
-                        style={{
-                          animation: 'expandDown 0.4s ease-out both'
-                        }}
-                      >
-                        <div className="p-6 space-y-4">
-                          {day.activities.map((activity, actIndex) => {
-                            const ActivityIcon = categoryIcons[activity.category];
-                            return (
-                              <div
-                                key={activity.id}
-                                className="bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100"
-                                style={{
-                                  animation: `slideInRight 0.4s ease-out ${actIndex * 0.1}s both`
-                                }}
-                              >
-                                <div className="flex gap-4">
-                                  <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center border ${categoryColors[activity.category]}`}>
-                                    <ActivityIcon className="w-6 h-6" />
-                                  </div>
-                                  <div className="flex-1">
-                                    <div className="flex items-start justify-between mb-2">
-                                      <div className="flex-1">
-                                        <h4 className="text-lg font-semibold text-gray-900">{activity.title}</h4>
-                                        <p className="text-sm text-gray-600 mt-1">{activity.description}</p>
-                                      </div>
-                                      <div className="text-right ml-4">
-                                        <p className="text-xl font-bold text-gray-900">
-                                          ${activity.cost.toLocaleString()}
-                                        </p>
-                                      </div>
+                  {isExpanded && (
+                    <div
+                      className="border-t-4 border-[#002147] bg-[#FFFEF9]"
+                      style={{
+                        animation: 'expandDown 0.4s ease-out both'
+                      }}
+                    >
+                      <div className="p-8 space-y-5">
+                        {day.activities.map((activity, actIndex) => {
+                          const ActivityIcon = categoryIcons[activity.category];
+                          return (
+                            <div
+                              key={activity.id}
+                              className="bg-[#FDF5E6] border-3 border-[#002147] p-6 shadow-md hover:shadow-lg transition-all duration-300"
+                              style={{
+                                animation: `slideInRight 0.4s ease-out ${actIndex * 0.1}s both`
+                              }}
+                            >
+                              <div className="flex gap-5">
+                                <div className={`flex-shrink-0 w-14 h-14 flex items-center justify-center border-3 ${categoryColors[activity.category]}`}>
+                                  <ActivityIcon className="w-7 h-7" />
+                                </div>
+                                <div className="flex-1">
+                                  <div className="flex items-start justify-between mb-3">
+                                    <div className="flex-1">
+                                      <h4 className="text-xl font-bold text-[#002147]">{activity.title}</h4>
+                                      <p className="text-base text-[#002147] mt-2 leading-relaxed">{activity.description}</p>
                                     </div>
-                                    <div className="flex flex-wrap gap-4 mt-3 text-sm text-gray-600">
-                                      <div className="flex items-center gap-1">
-                                        <Clock className="w-4 h-4" />
-                                        <span>{activity.time}</span>
-                                      </div>
-                                      <div className="flex items-center gap-1">
-                                        <MapPin className="w-4 h-4" />
-                                        <span>{activity.location}</span>
-                                      </div>
-                                      <div className="flex items-center gap-1">
-                                        <Calendar className="w-4 h-4" />
-                                        <span>{activity.duration}</span>
-                                      </div>
+                                    <div className="text-right ml-6">
+                                      <p className="text-2xl font-bold text-[#D4AF37]">
+                                        ${activity.cost.toLocaleString()}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div className="flex flex-wrap gap-6 mt-4 text-sm text-[#002147] font-medium">
+                                    <div className="flex items-center gap-2">
+                                      <Clock className="w-5 h-5" />
+                                      <span>{activity.time}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                      <MapPin className="w-5 h-5" />
+                                      <span>{activity.location}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                      <Calendar className="w-5 h-5" />
+                                      <span>{activity.duration}</span>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            );
-                          })}
-                        </div>
+                            </div>
+                          );
+                        })}
                       </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
+        )}
 
-          <div className="lg:col-span-1">
-            <div className="sticky top-8">
-              <BudgetProgressBar
-                totalBudget={totalBudget}
-                totalCost={totalCost}
-                categoryBreakdown={categoryBreakdown as any}
-              />
+        {viewMode === 'budget' && (
+          <div className="vintage-card p-8">
+            <BudgetProgressBar
+              totalBudget={totalBudget}
+              totalCost={totalCost}
+              categoryBreakdown={categoryBreakdown as any}
+            />
+          </div>
+        )}
+
+        {viewMode === 'safety' && (
+          <div className="vintage-card p-8">
+            <h2 className="text-3xl font-bold text-[#002147] mb-6">Safety Information</h2>
+            <div className="space-y-4 text-[#002147]">
+              <div className="bg-[#FFFEF9] border-3 border-[#002147] p-6">
+                <h3 className="font-bold text-xl mb-2">Emergency Contacts</h3>
+                <p className="leading-relaxed">Keep local emergency numbers handy and register with your embassy.</p>
+              </div>
+              <div className="bg-[#FFFEF9] border-3 border-[#002147] p-6">
+                <h3 className="font-bold text-xl mb-2">Travel Insurance</h3>
+                <p className="leading-relaxed">Ensure you have comprehensive travel insurance covering medical emergencies and trip cancellations.</p>
+              </div>
+              <div className="bg-[#FFFEF9] border-3 border-[#002147] p-6">
+                <h3 className="font-bold text-xl mb-2">Health Precautions</h3>
+                <p className="leading-relaxed">Check vaccination requirements and carry necessary medications with prescriptions.</p>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
 
       <style>{`
