@@ -9,6 +9,14 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Check if we're on localhost and handle OAuth callback
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+    if (isLocalhost && window.location.pathname === '/auth/callback') {
+      // For localhost, redirect to root to complete auth
+      window.history.replaceState({}, document.title, '/');
+    }
+
     supabase.auth.getSession().then(({ data: { session }, error }) => {
       if (!error) {
         console.log('✅ Supabase Connected');

@@ -8,10 +8,22 @@ export function AuthScreen() {
   const handleGoogleLogin = async () => {
     try {
       setLoading(true);
+
+      // Dynamic redirect URL based on current environment
+      const currentOrigin = window.location.origin;
+      const redirectUrl = `${currentOrigin}/auth/callback`;
+
+      // Environment check for webcontainer-api.io URLs
+      if (currentOrigin.includes('webcontainer-api.io')) {
+        console.log('🌐 WebContainer URL detected:');
+        console.log('📋 Copy this URL to Supabase OAuth settings:', currentOrigin);
+        console.log('📋 Redirect URL:', redirectUrl);
+      }
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: window.location.origin,
+          redirectTo: redirectUrl,
         },
       });
 
